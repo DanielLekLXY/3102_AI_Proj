@@ -12,6 +12,9 @@ Original file is located at
 import anvil.server
 anvil.server.connect("BA4U7VATUX4HV2WUPMJDEU2Q-LSGS34RAIS5QGAFE")
 
+# @anvil.server.callable
+
+
 anvil.server.wait_forever()
 
 # Simple Check code of available lib in environment

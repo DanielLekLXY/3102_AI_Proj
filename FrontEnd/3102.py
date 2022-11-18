@@ -7,14 +7,37 @@ Original file is located at
     https://colab.research.google.com/drive/1IXEm1zNLnixFUsxJcRUzAh3udYYfk8kb
 """
 
-# pip install anvil-uplink
-
 import anvil.server
 anvil.server.connect("BA4U7VATUX4HV2WUPMJDEU2Q-LSGS34RAIS5QGAFE")
 
-# @anvil.server.callable
+@anvil.server.callable
+def QandA_Generated(image):
+    # image argument should be the image object pass from the user
+    # This function should then call the other function fro Caption, Ques and Ans
+    # Caption Function call
+    # Answer Function call
+    # Question Function call
 
+    # This should return the Caption, Question and Answer
+    QA_Generated = ['Hello from Caption', 'Hello from Answer', 'Hello from Question']
+    return(QA_Generated)
 
+# Caption Function
+# Write Code
+
+# Answer Function
+# Write Code
+
+# Question Function
+# Write Code
+
+@anvil.server.callable
+def Save(Caption, Answer, Question, image):
+    # Function to save all 4 args into DB
+    # Write Code
+    return("Saved: ", Caption, Answer, Question, " Image: ", image)
+
+# Set this sever to wait forever like a restful API
 anvil.server.wait_forever()
 
 # Simple Check code of available lib in environment

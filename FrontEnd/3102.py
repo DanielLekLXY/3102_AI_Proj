@@ -7,13 +7,17 @@ Original file is located at
     https://colab.research.google.com/drive/1IXEm1zNLnixFUsxJcRUzAh3udYYfk8kb
 """
 
-import anvil.server
-anvil.server.connect("W6OS7I2PAOYNKSYGLL3JYDMU-LSGS34RAIS5QGAFE")
+import anvil.server # import Anvil server lib
+anvil.server.connect("W6OS7I2PAOYNKSYGLL3JYDMU-LSGS34RAIS5QGAFE") #     Connection uplink to Anvil Front End
 
+
+#################################################################
+######################### QandA Modules #########################
+#################################################################
 @anvil.server.callable
 def QandA_Generated(image):
     # image argument should be the image object pass from the user
-    # This function should then call the other function fro Caption, Ques and Ans
+    # This function should then call the other function for Caption, Ques and Ans
     # Caption Function call
     Cap = Caption_Function
     # Answer Function call
@@ -23,59 +27,59 @@ def QandA_Generated(image):
 
     # This should return the Caption, Question and Answer
     # QA_Generated = [Cap, Ans, Ques]
-    QA_Generated = ['Hello from Caption', 'Hello from Answer', 'Hello from Question']
+    QA_Generated = ['Hello from Caption', 'Hello from Answer', 'Hello from Question'] # test code excutable
     return(QA_Generated)
 
 @anvil.server.callable
 def Caption_Function():
     # Code
-    return 0 # Return text(str)
+    return 0 # Return text(str) for caption of image
 
 
 @anvil.server.callable
 def Answer_Function():
-    return 0 # Return text(str)
+    return 0 # Return text(str) for Answer for image
 
 
 @anvil.server.callable
 def Question_Function():
     # Code
-    return 0 # Return text(str)
+    return 0 # Return text(str) for question for image
 
 
-@anvil.server.callable
-def Save(Caption, Answer, Question, image):
-    # Function to save all 4 args into DB
-    # Write Code
-    return("Saved: ", Caption, Answer, Question, " Image: ", image)
-
+#################################################################
+########################## DB Modules ###########################
+#################################################################
 @anvil.server.callable
 def Call_All_DB():
     # Code
-    return 0
+    return 0 # returns all the items in DB
 
 @anvil.server.callable
 def Search_DB():
     # Code
-    return 0
+    return 0 # returns a specific DB item
 
 @anvil.server.callable
 def Update_DB():
     # Code
-    return 0
+    return 0 # Updates a item in the DB
 
 @anvil.server.callable
 def Delete_DB():
     # Code
-    return 0
+    return 0 # Deletes a item in DB
 
 @anvil.server.callable
 def Add_DB(Caption, Answer, Question, image):
     # Function to save all 4 args into DB
     # Code
-    return 0
+    return ("Saved: ", Caption, Answer, Question, " Image: ", image) # test code excutable
 
-# Set this sever to wait forever like a restful API
+
+#################################################################
+###### Set this sever to wait forever like a restful API ########
+#################################################################
 anvil.server.wait_forever()
 
 # Simple Check code of available lib in environment

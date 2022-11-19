@@ -8,34 +8,72 @@ Original file is located at
 """
 
 import anvil.server
-anvil.server.connect("BA4U7VATUX4HV2WUPMJDEU2Q-LSGS34RAIS5QGAFE")
+anvil.server.connect("W6OS7I2PAOYNKSYGLL3JYDMU-LSGS34RAIS5QGAFE")
 
 @anvil.server.callable
 def QandA_Generated(image):
     # image argument should be the image object pass from the user
     # This function should then call the other function fro Caption, Ques and Ans
     # Caption Function call
+    Cap = Caption_Function
     # Answer Function call
+    Ans = Answer_Function
     # Question Function call
+    Ques = Question_Function
 
     # This should return the Caption, Question and Answer
+    # QA_Generated = [Cap, Ans, Ques]
     QA_Generated = ['Hello from Caption', 'Hello from Answer', 'Hello from Question']
     return(QA_Generated)
 
-# Caption Function
-# Write Code
+@anvil.server.callable
+def Caption_Function():
+    # Code
+    return 0 # Return text(str)
 
-# Answer Function
-# Write Code
 
-# Question Function
-# Write Code
+@anvil.server.callable
+def Answer_Function():
+    return 0 # Return text(str)
+
+
+@anvil.server.callable
+def Question_Function():
+    # Code
+    return 0 # Return text(str)
+
 
 @anvil.server.callable
 def Save(Caption, Answer, Question, image):
     # Function to save all 4 args into DB
     # Write Code
     return("Saved: ", Caption, Answer, Question, " Image: ", image)
+
+@anvil.server.callable
+def Call_All_DB():
+    # Code
+    return 0
+
+@anvil.server.callable
+def Search_DB():
+    # Code
+    return 0
+
+@anvil.server.callable
+def Update_DB():
+    # Code
+    return 0
+
+@anvil.server.callable
+def Delete_DB():
+    # Code
+    return 0
+
+@anvil.server.callable
+def Add_DB(Caption, Answer, Question, image):
+    # Function to save all 4 args into DB
+    # Code
+    return 0
 
 # Set this sever to wait forever like a restful API
 anvil.server.wait_forever()

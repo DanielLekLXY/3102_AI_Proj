@@ -1,0 +1,10 @@
+version: "3"
+services:
+  3102-uplink:
+    # if something fails or the server is restarted, the container will restart
+    restart: always 
+    container_name: 3102-uplink
+    image: 3102-uplink
+    build: 
+      # build the iris clasifier image from the Dockerfile in the current directory
+      context: .

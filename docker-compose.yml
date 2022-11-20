@@ -1,0 +1,20 @@
+version: "3"
+services:
+  FrontEnd:
+    # if something fails or the server is restarted, the container will restart
+    restart: always 
+    container_name: 3102-uplink
+    image: 3102-uplink
+    build: 
+      # build the iris clasifier image from the Dockerfile in the current directory
+      context: FrontEnd
+  qnatransformer_api:
+    build: qnatransformer
+    command: >
+        jupyter kernelgateway 
+        --KernelGatewayApp.api=notebook-http
+        --KernelGatewayApp.ip=0.0.0.0
+        --KernelGatewayApp.port=8888
+        --KernelGatewayApp.seed_uri='/home/jovyan/work/qnatransformer.ipynb'
+    ports:
+        - "9001:8888"

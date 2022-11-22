@@ -7,3 +7,5 @@ ADD question_generation /home/jovyan/work/question_generation
 RUN python -m nltk.downloader punkt
 # Install latest stable Kernel Gateway
 RUN pip install --no-cache-dir jupyter_kernel_gateway
+
+EXPOSE 8888

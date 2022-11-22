@@ -8,13 +8,21 @@ services:
     build: 
       # build the iris clasifier image from the Dockerfile in the current directory
       context: FrontEnd
+    networks:
+      - 3102-net
+  
   qnatransformer_api:
     build: qnatransformer
+    container_name: Transformer
     command: >
         jupyter kernelgateway 
         --KernelGatewayApp.api=notebook-http
         --KernelGatewayApp.ip=0.0.0.0
         --KernelGatewayApp.port=8888
         --KernelGatewayApp.seed_uri='/home/jovyan/work/qnatransformer.ipynb'
-    ports:
-        - "9001:8888"
+    networks:
+      - 3102-net
+
+networks:
+  3102-net:
+    driver: bridge

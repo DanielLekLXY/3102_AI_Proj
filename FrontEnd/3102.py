@@ -8,7 +8,7 @@ Original file is located at
 """
 
 import anvil.server # import Anvil server lib
-anvil.server.connect("OAPVFXXPPQMYZT3YFBUV5H4W-JYAZCJAUIZUTN3MY") # Connection uplink to Anvil Front End
+anvil.server.connect("AUNCATU3SXUIECPC3KKECHWE-LSGS34RAIS5QGAFE") # Connection uplink to Anvil Front End
 from urllib.parse import urljoin
 import requests
 
@@ -23,28 +23,12 @@ def QandA_Generated(image):
     # Caption Function call
     Cap = Caption_Function()
     # Answer Function call
-
-    caption = 'The herb is generally safe to use. There is limited research to suggest that stinging nettle is an effective remedy. Researchers need to do more studies before they can confirm the health benefits of stinging nettle.'
-    URL = urljoin('http://qnatransformer:8888/transformer/', caption)
-    # sending get request and saving the response as response object
-    r = requests.get(url = URL)
-    # extracting data in json format
-    question = ''
-    answer = ''
-    data = r.json()
-    for i in data:
-        Question = f"Question: {i['question']}"
-        Answer = f"Answer: {i['answer']}"
-        print(Question)
-        print(Answer)
+    Result = QnA_Function()
+    Ans = Result[1]
+    Ques = Result[0]
     
-    Ans = Answer_Function()
-    # Question Function call
-    Ques = Question_Function()
-
     # This should return the Caption, Question and Answer
-    # QA_Generated = [Cap, Ans, Ques]
-    QA_Generated = ['Hello from Caption', Answer, Question] # test code excutable
+    QA_Generated = ['Hello from Caption', Ans, Ques] # test code excutable
     return(QA_Generated)
 
 @anvil.server.callable
@@ -54,14 +38,20 @@ def Caption_Function():
 
 
 @anvil.server.callable
-def Answer_Function():
-    return 0 # Return text(str) for Answer for image
+def QnA_Function():
+    caption = 'The herb is generally safe to use. There is limited research to suggest that stinging nettle is an effective remedy. Researchers need to do more studies before they can confirm the health benefits of stinging nettle.'
+    URL = urljoin('http://Transformer:8888/transformer/', caption)
+    # sending get request and saving the response as response object
+    r = requests.get(url = URL)
+    # extracting data in json format
+    data = r.json()
+    for i in data:
+        Question = f"{i['question']}"
+        Answer = f"{i['answer']}"
+        Q = Question
+        A = Answer
+    return [Q, A] # Return text(str) for Answer for image
 
-
-@anvil.server.callable
-def Question_Function():
-    # Code
-    return 0 # Return text(str) for question for image
 
 
 #################################################################

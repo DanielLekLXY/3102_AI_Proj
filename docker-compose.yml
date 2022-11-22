@@ -10,9 +10,10 @@ services:
       context: FrontEnd
     networks:
       - 3102-net
+  
   qnatransformer_api:
     build: qnatransformer
-    container_name: qnatransformer
+    container_name: Transformer
     command: >
         jupyter kernelgateway 
         --KernelGatewayApp.api=notebook-http

@@ -9,6 +9,8 @@ Original file is located at
 
 import anvil.server # import Anvil server lib
 anvil.server.connect("W6OS7I2PAOYNKSYGLL3JYDMU-LSGS34RAIS5QGAFE") # Connection uplink to Anvil Front End
+from urllib.parse import urljoin
+import requests
 
 
 #################################################################
@@ -19,15 +21,26 @@ def QandA_Generated(image):
     # image argument should be the image object pass from the user
     # This function should then call the other function for Caption, Ques and Ans
     # Caption Function call
-    Cap = Caption_Function
+    Cap = Caption_Function()
     # Answer Function call
-    Ans = Answer_Function
+
+    caption = 'The herb is generally safe to use. There is limited research to suggest that stinging nettle is an effective remedy. Researchers need to do more studies before they can confirm the health benefits of stinging nettle.'
+    URL = urljoin('http://qnatransformer:8888/transformer/', caption)
+    # sending get request and saving the response as response object
+    r = requests.get(url = URL)
+    # extracting data in json format
+    data = r.json()
+    for i in data:
+        print(f"Question: {i['question']}")
+        print(f"Answer: {i['answer']}")
+    
+    Ans = Answer_Function()
     # Question Function call
-    Ques = Question_Function
+    Ques = Question_Function()
 
     # This should return the Caption, Question and Answer
     # QA_Generated = [Cap, Ans, Ques]
-    QA_Generated = ['Hello from Caption', 'Hello from Answer', 'Hello from Question'] # test code excutable
+    QA_Generated = ['Hello from Caption', "Hello from Answer", 'Hello from Question'] # test code excutable
     return(QA_Generated)
 
 @anvil.server.callable

@@ -42,9 +42,9 @@ def QnA_Function():
     caption = 'The herb is generally safe to use. There is limited research to suggest that stinging nettle is an effective remedy. Researchers need to do more studies before they can confirm the health benefits of stinging nettle.'
     URL = urljoin('http://Transformer:8888/transformer/', caption)
     # sending get request and saving the response as response object
-    r = requests.get(url = URL)
+    QnA_Response = requests.get(url = URL)
     # extracting data in json format
-    data = r.json()
+    data = QnA_Response.json()
     for i in data:
         Question = f"{i['question']}"
         Answer = f"{i['answer']}"

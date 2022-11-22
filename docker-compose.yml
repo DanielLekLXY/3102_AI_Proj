@@ -25,4 +25,3 @@ services:
 networks:
   3102-net:
     driver: bridge
-    external: true

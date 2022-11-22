@@ -8,7 +8,7 @@ Original file is located at
 """
 
 import anvil.server # import Anvil server lib
-anvil.server.connect("W6OS7I2PAOYNKSYGLL3JYDMU-LSGS34RAIS5QGAFE") # Connection uplink to Anvil Front End
+anvil.server.connect("OAPVFXXPPQMYZT3YFBUV5H4W-JYAZCJAUIZUTN3MY") # Connection uplink to Anvil Front End
 from urllib.parse import urljoin
 import requests
 
@@ -29,10 +29,14 @@ def QandA_Generated(image):
     # sending get request and saving the response as response object
     r = requests.get(url = URL)
     # extracting data in json format
+    question = ''
+    answer = ''
     data = r.json()
     for i in data:
-        print(f"Question: {i['question']}")
-        print(f"Answer: {i['answer']}")
+        Question = f"Question: {i['question']}"
+        Answer = f"Answer: {i['answer']}"
+        print(Question)
+        print(Answer)
     
     Ans = Answer_Function()
     # Question Function call
@@ -40,7 +44,7 @@ def QandA_Generated(image):
 
     # This should return the Caption, Question and Answer
     # QA_Generated = [Cap, Ans, Ques]
-    QA_Generated = ['Hello from Caption', "Hello from Answer", 'Hello from Question'] # test code excutable
+    QA_Generated = ['Hello from Caption', Answer, Question] # test code excutable
     return(QA_Generated)
 
 @anvil.server.callable

@@ -2,6 +2,8 @@
 ICT3102 Docker project
 
 ### Mongo-Express
+**Warning: please do not use this in production, or you will face severe security issues**
+
 - To GET data from the db for image / question / answer / caption use the following: (use the mongo-express line through other docker containers, or if locally, use 0.0.0.0) 
 ```
 http://0.0.0.0:8081/db/data3102/expArr/datatable?key=&value=&type=&query=&projection=

@@ -25,12 +25,17 @@ services:
     restart: always 
     container_name: 3102-uplink
     image: 3102-uplink
+    volumes:
+      - './uploads:/uploads'
     build: 
       # build the iris clasifier image from the Dockerfile in the current directory
       context: FrontEnd
   qnatransformer_api:
     build: qnatransformer
     container_name: Transformer
+    ports:
+      - 8888:8888
+      - 9001:9001
     command: >
         jupyter kernelgateway 
         --KernelGatewayApp.api=notebook-http

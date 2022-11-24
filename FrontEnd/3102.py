@@ -8,11 +8,14 @@ Original file is located at
 """
 
 import anvil.server # import Anvil server lib
-anvil.server.connect("AUNCATU3SXUIECPC3KKECHWE-LSGS34RAIS5QGAFE") # Connection uplink to Anvil Front End
+import anvil.media
+import anvil
+anvil.server.connect("JAFRPONAZCBVKGEUN7DVBHTY-I5J6BPZ5SDPGP6I3") # Connection uplink to Anvil Front End
 from urllib.parse import urljoin
 import requests
-
-
+import base64
+import os
+import time
 #################################################################
 ######################### QandA Modules #########################
 #################################################################
@@ -60,7 +63,21 @@ def QnA_Function():
 @anvil.server.callable
 def Call_All_DB():
     # Code
-    return 0 # returns all the items in DB
+    URL = 'http://mongo-express:8081/db/data3102/expArr/datatable?key=&value=&type=&query=&projection='
+    QnA_Response = requests.get(url = URL)
+    data = QnA_Response.json()
+
+    for dx in data:
+        if "image" in dx:
+            try:
+                #f = open('/uploads/' + dx["image"])
+                dx["imagedata"] = anvil.media.from_file('/uploads/' + dx["image"], "img/png")
+                #f.close()
+            except:
+                dx["imagedata"] = "error"
+            
+
+    return data # returns all the items in DB
 
 @anvil.server.callable
 def Search_DB():
@@ -81,7 +98,18 @@ def Delete_DB():
 def Add_DB(Caption, Answer, Question, image):
     # Function to save all 4 args into DB
     # Code
-    return ("Saved: ", Caption, Answer, Question, " Image: ", image) # test code excutable
+    URL = 'http://mongo-express:8081/db/data3102/datatable'
+    # sending get request and saving the response as response object
+    if not os.path.exists("/uploads"):
+        os.makedirs("/uploads")
+    named = str(time.time()) + "_" + image.name
+    f = open('/uploads/' + named, 'wb+')
+    f.write(image.get_bytes())
+    f.close()
+
+    mongoresult = requests.post(url = URL, data = {"document": '{"image":"'+ named+'","question":"'+ Question +'","answer":"'+ Answer +'","caption":"'+ Caption +'"}'})
+    
+    return ("Savede: ", Caption, Answer, Question, " Image: ", image.name) # test code excutable
 
 
 #################################################################

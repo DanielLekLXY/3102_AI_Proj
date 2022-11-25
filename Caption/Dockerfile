@@ -4,3 +4,6 @@ ADD requirements.txt /
 RUN pip install -r  /requirements.txt
 ADD Caption_Generation.ipynb /home/jovyan/work/Caption_Generation.ipynb
 ADD Cap_Repo /home/jovyan/work/Cap_Repo
+RUN pip install --no-cache-dir jupyter_kernel_gateway
+
+EXPOSE 8889

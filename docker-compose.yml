@@ -42,3 +42,8 @@ services:
         --KernelGatewayApp.ip=0.0.0.0
         --KernelGatewayApp.port=8888
         --KernelGatewayApp.seed_uri='/home/jovyan/work/qnatransformer.ipynb'
+  Caption:
+    container_name: CaptionTransformer
+    ports:
+      - 8889:8889
+      - 9002:9002

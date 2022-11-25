@@ -1,9 +1,7 @@
-FROM toluclassics/transformers_notebook
-WORKDIR /home/jovyan/work
-ADD requirements.txt /
-RUN pip install -r  /requirements.txt
-ADD Caption_Generation.ipynb /home/jovyan/work/Caption_Generation.ipynb
-ADD Cap_Repo /home/jovyan/work/Cap_Repo
-RUN pip install --no-cache-dir jupyter_kernel_gateway
-
-EXPOSE 8889
+FROM python:3.8.0
+ADD . /captions
+WORKDIR /captions
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip3 install -r requirements.txt
+EXPOSE 8080
+CMD [ "uvicorn", "main:app", "--reload", "--host", "0.0.0.0", "--port", "8080" ]

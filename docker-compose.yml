@@ -35,15 +35,8 @@ services:
     container_name: Transformer
     ports:
       - 8888:8888
-      - 9001:9001
-    command: >
-        jupyter kernelgateway 
-        --KernelGatewayApp.api=notebook-http
-        --KernelGatewayApp.ip=0.0.0.0
-        --KernelGatewayApp.port=8888
-        --KernelGatewayApp.seed_uri='/home/jovyan/work/qnatransformer.ipynb'
-  Caption:
-    container_name: CaptionTransformer
+  caption:
+    build: Caption
+    container_name: captiontransformer
     ports:
-      - 8889:8889
-      - 9002:9002
+      - 8080:8080

@@ -10,18 +10,22 @@ Original file is located at
 import anvil.server # import Anvil server lib
 import anvil.media
 import anvil
-anvil.server.connect("JAFRPONAZCBVKGEUN7DVBHTY-I5J6BPZ5SDPGP6I3") # Connection uplink to Anvil Front End
+anvil.server.connect("AUNCATU3SXUIECPC3KKECHWE-LSGS34RAIS5QGAFE") # Connection uplink to Anvil Front End
 from urllib.parse import urljoin
 import requests
 import base64
 import os
 import time
 import urllib.parse
+from time import perf_counter
+import cProfile
+
 #################################################################
 ######################### QandA Modules #########################
 #################################################################
 @anvil.server.callable
 def QandA_Generated(image):
+    start = perf_counter()
     # image argument should be the image object pass from the user
     # This function should then call the other function for Caption, Ques and Ans
     # Caption Function call
@@ -33,20 +37,26 @@ def QandA_Generated(image):
     
     # This should return the Caption, Question and Answer
     QA_Generated = [Cap, Ans, Ques] # test code excutable
+    duration = perf_counter() - start
+    print("QandA Generator Time: ", duration)
     return(QA_Generated)
 
 @anvil.server.callable
 def Caption_Function(image):
+    start = perf_counter()
     url = 'http://captions:8080/image_captioning'
     files = {'img': image.get_bytes()}
     r = requests.post(url, files=files)
     # extracting data in json format
     data = r.json()
+    duration = perf_counter() - start
+    print("Caption Function Time: ", duration)
     return data['caption'] # Return text(str) for caption of image
 
 
 @anvil.server.callable
 def QnA_Function(caption):
+    start = perf_counter()
     # caption = 'The herb is generally safe to use. There is limited research to suggest that stinging nettle is an effective remedy. Researchers need to do more studies before they can confirm the health benefits of stinging nettle.'
     # sending get request and saving the response as response object
     payload = {'captions': caption}
@@ -58,81 +68,9 @@ def QnA_Function(caption):
         Answer = f"{i['answer']}"
         Q = Question
         A = Answer
+    duration = perf_counter() - start
+    print("QnA Function Time: ", duration)
     return [Q, A] # Return text(str) for Answer for image
-
-
-
-#################################################################
-########################## DB Modules ###########################
-#################################################################
-@anvil.server.callable
-def Call_All_DB():
-    # Code
-    URL = 'http://mongo-express:8081/db/data3102/expArr/datatable?key=&value=&type=&query=&projection='
-    QnA_Response = requests.get(url = URL)
-    data = QnA_Response.json()
-
-    for dx in data:
-        if "image" in dx:
-            try:
-                #f = open('/uploads/' + dx["image"])
-                dx["imagedata"] = anvil.media.from_file('/uploads/' + dx["image"], "img/png")
-                #f.close()
-            except:
-                dx["imagedata"] = "error"
-            
-
-    return data # returns all the items in DB
-
-@anvil.server.callable
-def Search_DB():
-    # Code
-    return 0 # returns a specific DB item
-
-@anvil.server.callable
-def Update_DB(Caption, Answer, Question,image, id):
-    URL = 'http://mongo-express:8081/db/data3102/datatable'
-    # sending get request and saving the response as response object
-    if not os.path.exists("/uploads"):
-        os.makedirs("/uploads")
-    named = str(time.time()) + "_" + image.name
-    f = open('/uploads/' + named, 'wb+')
-    f.write(image.get_bytes())
-    f.close()
-
-    ##id is following ObjectId('6381addcfd7141e464242296')
-    mongoresult = requests.post(url = URL, data = {"_method": "put", "document": '{"id":"'+id +'" "image":"'+ named+'","question":"'+ Question +'","answer":"'+ Answer +'","caption":"'+ Caption +'"}'})
-
-    return ("Savede: ", Caption, Answer, Question, " Image: ", image.name) # test code excutable
- 
-
-@anvil.server.callable
-def Delete_DB(id):
-    #http://localhost:8081/db/data3102/datatable/%226381ab55fd7141e464242294%22?skip=0&key=&value=&type=&query=&projection=
-    URL = 'http://mongo-express:8081/db/data3102/datatable/' + urllib.parse.quote(id) + "?skip=0&key=&value=&type=&query=&projection="
-    
-    mongoresult = requests.post(url = URL, data = {"_method": 'delete'})
-    
-    # Code
-    return 0 # Deletes a item in DB
-
-@anvil.server.callable
-def Add_DB(Caption, Answer, Question, image):
-    # Function to save all 4 args into DB
-    # Code
-    URL = 'http://mongo-express:8081/db/data3102/datatable'
-    # sending get request and saving the response as response object
-    if not os.path.exists("/uploads"):
-        os.makedirs("/uploads")
-    named = str(time.time()) + "_" + image.name
-    f = open('/uploads/' + named, 'wb+')
-    f.write(image.get_bytes())
-    f.close()
-
-    mongoresult = requests.post(url = URL, data = {"document": '{"image":"'+ named+'","question":"'+ Question +'","answer":"'+ Answer +'","caption":"'+ Caption +'"}'})
-    
-    return ("Savede: ", Caption, Answer, Question, " Image: ", image.name) # test code excutable
-
 
 #################################################################
 ###### Set this sever to wait forever like a restful API ########

@@ -43,4 +43,4 @@ services:
 
 networks:
   default:
-    name: 3102-net
+    name: 3102-network

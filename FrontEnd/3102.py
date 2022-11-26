@@ -16,6 +16,7 @@ import requests
 import base64
 import os
 import time
+import urllib.parse
 #################################################################
 ######################### QandA Modules #########################
 #################################################################
@@ -89,12 +90,29 @@ def Search_DB():
     return 0 # returns a specific DB item
 
 @anvil.server.callable
-def Update_DB():
-    # Code
-    return 0 # Updates a item in the DB
+def Update_DB(Caption, Answer, Question,image, id):
+    URL = 'http://mongo-express:8081/db/data3102/datatable'
+    # sending get request and saving the response as response object
+    if not os.path.exists("/uploads"):
+        os.makedirs("/uploads")
+    named = str(time.time()) + "_" + image.name
+    f = open('/uploads/' + named, 'wb+')
+    f.write(image.get_bytes())
+    f.close()
+
+    ##id is following ObjectId('6381addcfd7141e464242296')
+    mongoresult = requests.post(url = URL, data = {"_method": "put", "document": '{"id":"'+id +'" "image":"'+ named+'","question":"'+ Question +'","answer":"'+ Answer +'","caption":"'+ Caption +'"}'})
+
+    return ("Savede: ", Caption, Answer, Question, " Image: ", image.name) # test code excutable
+ 
 
 @anvil.server.callable
-def Delete_DB():
+def Delete_DB(id):
+    #http://localhost:8081/db/data3102/datatable/%226381ab55fd7141e464242294%22?skip=0&key=&value=&type=&query=&projection=
+    URL = 'http://mongo-express:8081/db/data3102/datatable/' + urllib.parse.quote(id) + "?skip=0&key=&value=&type=&query=&projection="
+    
+    mongoresult = requests.post(url = URL, data = {"_method": 'delete'})
+    
     # Code
     return 0 # Deletes a item in DB
 

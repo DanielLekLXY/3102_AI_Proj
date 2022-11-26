@@ -37,6 +37,10 @@ services:
       - 8888:8888
   caption:
     build: Caption
-    container_name: captiontransformer
+    container_name: captions
     ports:
       - 8080:8080
+
+networks:
+  default:
+    name: 3102-net

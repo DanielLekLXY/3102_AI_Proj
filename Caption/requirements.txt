@@ -4,3 +4,4 @@ fairscale==0.4.4
 pycocoevalcap
 fastapi
 uvicorn
+python-multipart

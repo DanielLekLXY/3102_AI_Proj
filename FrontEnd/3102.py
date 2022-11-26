@@ -24,28 +24,32 @@ def QandA_Generated(image):
     # image argument should be the image object pass from the user
     # This function should then call the other function for Caption, Ques and Ans
     # Caption Function call
-    Cap = Caption_Function()
+    Cap = Caption_Function(image)
     # Answer Function call
-    Result = QnA_Function()
+    Result = QnA_Function(caption=Cap)
     Ans = Result[1]
     Ques = Result[0]
     
     # This should return the Caption, Question and Answer
-    QA_Generated = ['Hello from Caption', Ans, Ques] # test code excutable
+    QA_Generated = [Cap, Ans, Ques] # test code excutable
     return(QA_Generated)
 
 @anvil.server.callable
-def Caption_Function():
-    # Code
-    return 0 # Return text(str) for caption of image
+def Caption_Function(image):
+    url = 'http://captions:8080/image_captioning'
+    files = {'img': image.get_bytes()}
+    r = requests.post(url, files=files)
+    # extracting data in json format
+    data = r.json()
+    return data['caption'] # Return text(str) for caption of image
 
 
 @anvil.server.callable
-def QnA_Function():
-    caption = 'The herb is generally safe to use. There is limited research to suggest that stinging nettle is an effective remedy. Researchers need to do more studies before they can confirm the health benefits of stinging nettle.'
-    URL = urljoin('http://Transformer:8888/transformer/', caption)
+def QnA_Function(caption):
+    # caption = 'The herb is generally safe to use. There is limited research to suggest that stinging nettle is an effective remedy. Researchers need to do more studies before they can confirm the health benefits of stinging nettle.'
     # sending get request and saving the response as response object
-    QnA_Response = requests.get(url = URL)
+    payload = {'captions': caption}
+    QnA_Response = requests.get('http://Transformer:8888/transformer', params=payload)
     # extracting data in json format
     data = QnA_Response.json()
     for i in data:

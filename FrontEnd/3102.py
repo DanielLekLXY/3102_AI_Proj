@@ -132,7 +132,6 @@ def Test_Caption(image):
 
     # Caption Function call
     Cap = Caption_Function(image)
-    cProfile.runctx('Caption_Function(image)', globals(), locals(), filename=None)
 
     # Answer Function call
     Result = QnA_Function(caption=Cap)

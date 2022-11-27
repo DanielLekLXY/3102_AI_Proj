@@ -1,0 +1,5 @@
+This link will run your app in a new browser tab:
+https://LSGS34RAIS5QGAFE.anvil.app/OUIO26PPYJGQB7LP3UGD7MJP
+
+This link create a copy of your app (Including ists Data Tables and their data):
+https://anvil.works/build#clone:LSGS34RAIS5QGAFE=QR2HK72HEZKADGXDRLRUTQ66

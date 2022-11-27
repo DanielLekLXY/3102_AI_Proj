@@ -10,7 +10,7 @@ Original file is located at
 import anvil.server # import Anvil server lib
 import anvil.media
 import anvil
-anvil.server.connect("AUNCATU3SXUIECPC3KKECHWE-LSGS34RAIS5QGAFE") # Connection uplink to Anvil Front End
+anvil.server.connect("E6B6LD2D67YU33OQZXFNXRHD-LSGS34RAIS5QGAFE") # Connection uplink to Anvil Front End
 from urllib.parse import urljoin
 import requests
 import base64

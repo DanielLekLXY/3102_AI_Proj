@@ -1,5 +1,20 @@
 # 3102_AI_Proj
 ICT3102 Docker project
+# Starting the Project
+- Clone the project
+- open your command line
+- CD and navigate to the directory of the project
+- Once there use the command "Docker-compose build" in the cmd
+- Followed by "Docker-compose up" in the cmd
+- Once all the container are up, head to the first website link provided bellow.
+This Link will RUN the app in a new browser.
+(https://LSGS34RAIS5QGAFE.anvil.app/OUIO26PPYJGQB7LP3UGD7MJP)
+This link will CREATE A COPY of your app that includes access to the operating code, Data Tables and their Data.
+(https://anvil.works/build#clone:LSGS34RAIS5QGAFE=QR2HK72HEZKADGXDRLRUTQ66)
+
+Note:
+The container Transformer and Caption may take longer to be fully operational please wait a few minutes for it to be up and running.
+You can check if thet are up by going to the port web site of the container
 
 ### Mongo-Express
 **Warning: please do not use this in production, or you will face severe security issues**
